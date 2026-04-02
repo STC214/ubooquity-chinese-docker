@@ -1,0 +1,51 @@
+<div id="dimoverlay"></div>
+<div class="popupmenu" id="pageselector">
+    <div class="popuptitle">跳转到页面</div>
+    {{pageSelectorLinks}}
+</div>
+<div class="popupmenu" id="searchbox">
+    <div class="popuptitle">查找书籍</div>
+    <form id="searchform" method="POST" action="?search=simple">
+        <input class="textbox" type="text" name="searchstring"/>
+        <input class="actionbutton" type="submit" value="搜索"/>
+    </form>
+    <br/>
+</div>
+<div class="popupmenu" id="bookdetails"></div>
+<div class="popupmenu" id="settingsbox">
+    <div class="popuptitle"><span class="categorytitle">{{category}}</span> 显示设置</div>
+    <form id="settingsform" method="POST" action="{{rootPath}}/{{category}}?settings=true">
+        <div class="sectiontitle">分组</div>
+        <!-- ⚠ values must be consistent with grouping enum -->
+        <label class="radiolabel">
+            <input type="radio" name="grouping" value="FOLDER" {{checkedGroupByFolder}}/>按文件夹</label>
+        <label class="radiolabel">
+            <input type="radio" name="grouping" value="FLAT" {{checkedNoGrouping}}/>平铺</label>
+        <br/>
+        <div class="sectiontitle">排序条件</div>
+        <!-- ⚠ values must be consistent with field enum -->
+        <label class="radiolabel">
+            <input type="radio" name="sortingCriterion" value="FILE_PATH" {{checkedSortByFilePath}}/>文件路径</label>
+        <label class="radiolabel">
+            <input type="radio" name="sortingCriterion" value="FILE_NAME" {{checkedSortByFileName}}/>文件名</label>
+        <br/>
+        <label class="radiolabel">
+            <input type="radio" name="sortingCriterion" value="WRITERS" {{checkedSortByWriters}}/>作者</label>
+        <label class="radiolabel">
+            <input type="radio" name="sortingCriterion" value="TITLE" {{checkedSortByTitle}}/>标题</label>
+        <br/>
+        <label class="radiolabel">
+            <input type="radio" name="sortingCriterion" value="DATE_UPDATED" {{checkedSortByDate}}/>添加日期</label>
+        <br/>
+        <div class="sectiontitle">排序顺序</div>
+        <!-- ⚠ values must be consistent with sorting order enum -->
+        <label class="radiolabel">
+            <input type="radio" name="sortingOrder" value="ASC" {{checkedSortAsc}}/>升序</label>
+        <label class="radiolabel">
+            <input type="radio" name="sortingOrder" value="DESC" {{checkedSortDesc}}/>降序</label>
+        <br/>
+        <br/>
+        <input class="actionbutton" type="submit" value="应用"/>
+    </form>
+    <br/>
+</div>

@@ -1,0 +1,38 @@
+﻿<header class="topbar">
+  <div class="topbar-tools">
+    <div class="brand-line">
+      <strong><a href="{{rootPath}}/">Ubooquity</a></strong>
+      <span>
+        {{#isSearchResult}}搜索结果{{/isSearchResult}}
+        {{^isSearchResult}}{{#pageLabel}}{{pageLabel}}{{/pageLabel}}{{^pageLabel}}书库浏览{{/pageLabel}}{{/isSearchResult}}
+      </span>
+    </div>
+
+    {{#parentUrl}}
+      <a class="action action-soft" href="{{parentUrl}}">返回上一级</a>
+    {{/parentUrl}}
+    <a class="action action-ghost" href="{{rootPath}}/">回到首页</a>
+
+    {{>library/inc-library-topbar-search.html}}
+
+    {{#displayPageSelector}}
+      <div class="page-selector" aria-label="分页导航">
+        {{{pageSelectorLinks}}}
+      </div>
+    {{/displayPageSelector}}
+  </div>
+
+  <div class="topbar-crumbs">
+    <span class="crumb">首页</span>
+    <span class="crumb-sep">/</span>
+    <span class="crumb">书库</span>
+    {{#pageLabel}}
+      <span class="crumb-sep">/</span>
+      <span class="crumb crumb-current">{{pageLabel}}</span>
+    {{/pageLabel}}
+    {{#searchString}}
+      <span class="crumb-sep">/</span>
+      <span class="crumb">搜索：{{searchString}}</span>
+    {{/searchString}}
+  </div>
+</header>

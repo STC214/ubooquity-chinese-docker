@@ -1,0 +1,18 @@
+services:
+  ubooquity:
+    image: lscr.io/linuxserver/ubooquity:latest # 官方推荐的新镜像地址
+    container_name: ubooquity # 容器名，方便后续用 docker stop/rm/logs 操作
+    environment:
+      TZ: Asia/Shanghai # 时区，日志和计划任务都会按这个时间显示
+      PUID: "0" # 宿主机用户 UID；你这里查到的是 0
+      PGID: "0" # 宿主机用户 GID；你这里查到的是 0
+      MAXMEM: "1024" # Java 最大内存，单位 MB；按需调大或调小
+    ports:
+      - "2202:2202" # Web 访问端口
+      - "2203:2203" # 管理端口
+    volumes:
+      - /mnt/sda4/Comics_L/config:/config # 配置和数据库，别删这个目录
+      - /mnt/sda4/Comics_L/books:/books # 图书目录
+      - /mnt/sdb1/SHOTA/COMIC:/comics # 漫画目录
+      - /mnt/sda4/Comics_L/files:/files # 附加文件目录
+    restart: unless-stopped # 容器异常退出后自动重启；手动停止则不会自动拉起

@@ -1,0 +1,112 @@
+﻿<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <title>Ubooquity · 书库</title>
+  {{>common/inc-header.html}}
+</head>
+<body>
+  <div class="page-shell">
+    {{>library/inc-library-topbar.html}}
+
+    <section class="library-popups">
+      <div class="panel popup-grid">
+        <div class="popup-card">
+          <div class="section-head">
+            <div>
+              <span class="section-eyebrow">状态</span>
+              <h2>当前浏览信息</h2>
+            </div>
+          </div>
+
+          <div class="popup-chips">
+            {{#isSearchResult}}<span class="chip">当前模式：搜索结果</span>{{/isSearchResult}}
+            {{^isSearchResult}}<span class="chip">当前模式：普通浏览</span>{{/isSearchResult}}
+            {{#searchString}}<span class="chip">搜索词：{{searchString}}</span>{{/searchString}}
+            {{#pageLabel}}<span class="chip">页面标签：{{pageLabel}}</span>{{/pageLabel}}
+            {{#totalPages}}<span class="chip">总页数：{{totalPages}}</span>{{/totalPages}}
+          </div>
+        </div>
+
+        <div class="popup-card">
+          <div class="section-head">
+            <div>
+              <span class="section-eyebrow">导航</span>
+              <h2>分页</h2>
+            </div>
+          </div>
+
+          <div class="page-selector">
+            {{{pageSelectorLinks}}}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="panel">
+      <div class="section-head">
+        <div>
+          <span class="section-eyebrow">内容</span>
+          <h2>条目列表</h2>
+        </div>
+        <p class="page-note">点击封面或标题进入阅读，使用搜索框缩小范围。</p>
+      </div>
+
+      <div class="grid grid-items">
+        {{#items}}
+          <article class="book-card {{readingStatusClass}}" data-card-link>
+            <a
+              class="book-cover"
+              href="{{#isFolder}}{{itemFolderUrl}}{{/isFolder}}{{^isFolder}}{{readerUrl}}{{/isFolder}}"
+              data-card-primary
+            >
+              <img src="{{itemCoverUrl}}" alt="{{itemTitle}}">
+              {{#progress}}
+                <span class="progress-pill">{{progress}}%</span>
+              {{/progress}}
+              {{#isFolder}}
+                <span class="cover-chip">文件夹</span>
+              {{/isFolder}}
+              {{^isFolder}}
+                <span class="cover-chip">书籍</span>
+              {{/isFolder}}
+            </a>
+
+            <div class="book-body">
+              <h3>{{itemTitle}}</h3>
+
+              <div class="meta">
+                {{#writers}}<span>作者：{{writers}}</span>{{/writers}}
+                {{#seriesName}}<span>系列：{{seriesName}}</span>{{/seriesName}}
+                {{#seriesIndex}}<span>卷号：{{seriesIndex}}</span>{{/seriesIndex}}
+                {{#publicationDate}}<span>日期：{{publicationDate}}</span>{{/publicationDate}}
+                {{#language}}<span>语言：{{language}}</span>{{/language}}
+                {{#fileExtension}}<span>格式：{{fileExtension}}</span>{{/fileExtension}}
+                {{#fileSize}}<span>大小：{{fileSize}}</span>{{/fileSize}}
+                {{#itemChildrenCount}}<span>条目：{{itemChildrenCount}}</span>{{/itemChildrenCount}}
+              </div>
+
+              <div class="card-actions">
+                {{#isFolder}}
+                  <a class="action" href="{{itemFolderUrl}}">打开文件夹</a>
+                {{/isFolder}}
+                {{^isFolder}}
+                  <a class="action" href="{{readerUrl}}">在线阅读</a>
+                {{/isFolder}}
+                {{#downloadUrl}}
+                  <a class="action action-soft" href="{{downloadUrl}}">下载</a>
+                {{/downloadUrl}}
+              </div>
+            </div>
+          </article>
+        {{/items}}
+      </div>
+
+      {{^items}}
+        <div class="empty-state">
+          当前页面没有可显示的内容。
+        </div>
+      {{/items}}
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+
+<head>
+    {{>common/inc-header.html}}
+    <link rel="stylesheet" type="text/css" href="{{rootPath}}/theme/login/login.css"/>
+</head>
+<body>
+{{loginScripts}}
+
+<div id="banner"></div>
+<form id="{{formId}}" method="POST" action="{{rootPath}}/">
+    请先登录
+    <br/><br/><br/><br/>
+    {{hiddenInputs}}
+    用户名
+    <input type="text" id="loginfield" name="{{loginFieldName}}" value=""/>
+    <br/><br/>
+    密码
+    <input type="password" id="{{passwordFieldId}}" value=""/>
+    <br/><br/>
+    <br/><br/>
+    <input type="submit" id="loginbutton" onclick="{{onLoginClick}}" value="登录"/>
+</form>
+</body>
+
+</html>

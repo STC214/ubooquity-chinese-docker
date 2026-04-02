@@ -1,0 +1,59 @@
+﻿<section class="library-popups">
+  <div class="panel popup-grid">
+    <div class="popup-card">
+      <div class="section-head">
+        <div>
+          <span class="section-eyebrow">状态</span>
+          <h2>当前浏览信息</h2>
+        </div>
+      </div>
+
+      <div class="popup-chips">
+        {{#isSearchResult}}<span class="chip">当前模式：搜索结果</span>{{/isSearchResult}}
+        {{^isSearchResult}}<span class="chip">当前模式：普通浏览</span>{{/isSearchResult}}
+        {{#searchString}}<span class="chip">搜索词：{{searchString}}</span>{{/searchString}}
+        {{#pageLabel}}<span class="chip">页面标签：{{pageLabel}}</span>{{/pageLabel}}
+        {{#totalPages}}<span class="chip">总页数：{{totalPages}}</span>{{/totalPages}}
+      </div>
+    </div>
+
+    <div class="popup-card">
+      <div class="section-head">
+        <div>
+          <span class="section-eyebrow">导航</span>
+          <h2>分页</h2>
+        </div>
+      </div>
+
+      <div class="page-selector">
+        {{{pageSelectorLinks}}}
+      </div>
+    </div>
+
+    <div class="popup-card">
+      <div class="section-head">
+        <div>
+          <span class="section-eyebrow">说明</span>
+          <h2>排序与筛选</h2>
+        </div>
+      </div>
+
+      <p class="page-note">
+        当前主题保留了官方页面的功能入口，并将主要前台文案改成中文。
+        排序和分组的实际交互仍由 Ubooquity 默认逻辑提供。
+      </p>
+
+      <div class="popup-chips">
+        {{#checkedSortAsc}}<span class="chip">排序：升序</span>{{/checkedSortAsc}}
+        {{#checkedSortDesc}}<span class="chip">排序：降序</span>{{/checkedSortDesc}}
+        {{#checkedSortByTitle}}<span class="chip">排序：标题</span>{{/checkedSortByTitle}}
+        {{#checkedSortByDate}}<span class="chip">排序：日期</span>{{/checkedSortByDate}}
+        {{#checkedSortByWriters}}<span class="chip">排序：作者</span>{{/checkedSortByWriters}}
+        {{#checkedSortByFileName}}<span class="chip">排序：文件名</span>{{/checkedSortByFileName}}
+        {{#checkedSortByFilePath}}<span class="chip">排序：路径</span>{{/checkedSortByFilePath}}
+        {{#checkedNoGrouping}}<span class="chip">分组：不分组</span>{{/checkedNoGrouping}}
+        {{#checkedGroupByFolder}}<span class="chip">分组：按文件夹</span>{{/checkedGroupByFolder}}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,47 @@
+﻿<body>
+  <div class="auth-wrap">
+    <section class="auth-panel">
+      <div class="auth-head">
+        <div>
+          <span class="eyebrow">管理入口</span>
+          <h1>登录 Ubooquity</h1>
+          <p>输入管理员账号信息后进入书库。</p>
+        </div>
+      </div>
+
+      <form id="{{formId}}" class="auth-form" method="post">
+        {{{hiddenInputs}}}
+        <label>
+          <span class="page-note">用户名</span>
+          <input
+            type="text"
+            name="{{loginFieldName}}"
+            autocomplete="username"
+            inputmode="text"
+            placeholder="请输入用户名"
+          >
+        </label>
+
+        <label>
+          <span class="page-note">密码</span>
+          <input
+            id="{{passwordFieldId}}"
+            type="password"
+            autocomplete="current-password"
+            placeholder="请输入密码"
+          >
+        </label>
+
+        <div class="auth-actions">
+          <button type="button" onclick="{{onLoginClick}}">进入书库</button>
+        </div>
+      </form>
+
+      <div class="footer-note">
+        如果你刚刚设置过管理员密码，这里就是进入后台和前台内容的入口。
+      </div>
+
+      {{{loginScripts}}}
+    </section>
+  </div>
+</body>

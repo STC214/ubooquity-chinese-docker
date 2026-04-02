@@ -1,0 +1,82 @@
+﻿<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <title>Ubooquity · 详情</title>
+  {{>common/inc-header.html}}
+</head>
+<body>
+  <div class="page-shell">
+    {{>library/inc-library-topbar.html}}
+
+    <section class="library-popups">
+      <div class="panel popup-grid">
+        <div class="popup-card">
+          <div class="section-head">
+            <div>
+              <span class="section-eyebrow">状态</span>
+              <h2>当前条目</h2>
+            </div>
+          </div>
+
+          <div class="popup-chips">
+            {{#itemTitle}}<span class="chip">标题：{{itemTitle}}</span>{{/itemTitle}}
+            {{#writers}}<span class="chip">作者：{{writers}}</span>{{/writers}}
+            {{#seriesName}}<span class="chip">系列：{{seriesName}}</span>{{/seriesName}}
+            {{#language}}<span class="chip">语言：{{language}}</span>{{/language}}
+            {{#fileExtension}}<span class="chip">格式：{{fileExtension}}</span>{{/fileExtension}}
+          </div>
+        </div>
+
+        <div class="popup-card">
+          <div class="section-head">
+            <div>
+              <span class="section-eyebrow">导航</span>
+              <h2>操作</h2>
+            </div>
+          </div>
+
+          <div class="card-actions">
+            {{#readerUrl}}<a class="action" href="{{readerUrl}}">在线阅读</a>{{/readerUrl}}
+            {{#downloadUrl}}<a class="action action-soft" href="{{downloadUrl}}">下载</a>{{/downloadUrl}}
+            {{#itemFolderUrl}}<a class="action action-ghost" href="{{itemFolderUrl}}">返回目录</a>{{/itemFolderUrl}}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="detail-layout">
+      <figure class="detail-cover">
+        <img src="{{itemCoverUrl}}" alt="{{itemTitle}}">
+      </figure>
+
+      <article class="detail-card">
+        <div class="detail-head">
+          <span class="eyebrow">
+            {{#isFolder}}文件夹详情{{/isFolder}}
+            {{^isFolder}}书籍详情{{/isFolder}}
+          </span>
+        </div>
+
+        <h1>{{itemTitle}}</h1>
+
+        <div class="detail-meta">
+          {{#writers}}<span>作者：{{writers}}</span>{{/writers}}
+          {{#seriesName}}<span>系列：{{seriesName}}</span>{{/seriesName}}
+          {{#seriesIndex}}<span>卷号：{{seriesIndex}}</span>{{/seriesIndex}}
+          {{#tags}}<span>标签：{{tags}}</span>{{/tags}}
+          {{#language}}<span>语言：{{language}}</span>{{/language}}
+          {{#publicationDate}}<span>日期：{{publicationDate}}</span>{{/publicationDate}}
+          {{#fileExtension}}<span>格式：{{fileExtension}}</span>{{/fileExtension}}
+          {{#fileSize}}<span>大小：{{fileSize}}</span>{{/fileSize}}
+          {{#rating}}<span>评分：{{rating}}</span>{{/rating}}
+          {{#progress}}<span>阅读进度：{{progress}}%</span>{{/progress}}
+        </div>
+
+        {{#description}}
+          <p class="description">{{description}}</p>
+        {{/description}}
+      </article>
+    </main>
+  </div>
+</body>
+</html>

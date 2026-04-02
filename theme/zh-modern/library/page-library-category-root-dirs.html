@@ -1,0 +1,75 @@
+﻿<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <title>Ubooquity · 分类根目录</title>
+  {{>common/inc-header.html}}
+</head>
+<body>
+  <div class="page-shell">
+    {{>library/inc-library-topbar.html}}
+
+    <section class="library-popups">
+      <div class="panel popup-grid">
+        <div class="popup-card">
+          <div class="section-head">
+            <div>
+              <span class="section-eyebrow">状态</span>
+              <h2>当前浏览信息</h2>
+            </div>
+          </div>
+
+          <div class="popup-chips">
+            {{#isSearchResult}}<span class="chip">当前模式：搜索结果</span>{{/isSearchResult}}
+            {{^isSearchResult}}<span class="chip">当前模式：普通浏览</span>{{/isSearchResult}}
+            {{#searchString}}<span class="chip">搜索词：{{searchString}}</span>{{/searchString}}
+            {{#pageLabel}}<span class="chip">页面标签：{{pageLabel}}</span>{{/pageLabel}}
+            {{#totalPages}}<span class="chip">总页数：{{totalPages}}</span>{{/totalPages}}
+          </div>
+        </div>
+
+        <div class="popup-card">
+          <div class="section-head">
+            <div>
+              <span class="section-eyebrow">导航</span>
+              <h2>分页</h2>
+            </div>
+          </div>
+
+          <div class="page-selector">
+            {{{pageSelectorLinks}}}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="panel">
+      <div class="section-head">
+        <div>
+          <span class="section-eyebrow">目录</span>
+          <h2>分类根目录</h2>
+        </div>
+        <p class="page-note">从这里进入某个根文件夹，继续浏览下一级内容。</p>
+      </div>
+
+      <div class="grid grid-folders">
+        {{#rootFolders}}
+          <article class="folder-card" data-card-link>
+            <a class="folder-cover" href="{{folderUrl}}" data-card-primary>
+              <div class="cover-chip">根目录</div>
+            </a>
+            <div class="folder-body">
+              <h3>{{folderName}}</h3>
+              <div class="folder-meta">
+                <span>点击进入该文件夹</span>
+              </div>
+              <div class="card-actions">
+                <a class="action" href="{{folderUrl}}" data-card-primary>打开文件夹</a>
+              </div>
+            </div>
+          </article>
+        {{/rootFolders}}
+      </div>
+    </main>
+  </div>
+</body>
+</html>

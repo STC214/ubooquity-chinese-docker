@@ -1,0 +1,46 @@
+<div id="details">
+    <a id="details_close" href="#" onclick="togglePopup('bookdetails');location.reload();return false;"></a>
+    <div id="details_upper_row">
+        <div id="details_cover_progress">
+            <div id="details_cover">
+                <img src="{{coverUrl}}" />
+            </div>
+            <div id="details_progress_wrapper" class="{{readingStatusClass}}">
+                <div class="details_progress_bar">
+                    <span class="details_progress_bar_fill" style="--value: {{progress}}%;"></span>
+                </div>
+            </div>
+        </div>
+        <div id="details_right_col">
+            <div id="details_info_panel">
+                <div id="details_title">{{title}}</div>
+                <div id="details_authors">{{writers}}</div>
+                {{#seriesName}}
+                <div id="details_series">{{seriesName}} - {{seriesIndex}}</div>
+                {{/seriesName}}
+                {{#tags}}
+                <div id="details_tags">{{tags}}</div>
+                {{/tags}}
+                {{#language}}
+                <div id="details_language">{{language}}</div>
+                {{/language}}
+                <div id="details_file">{{fileExtension}} ({{fileSize}})</div>
+                {{#publicationDate}}
+                <div id="details_publication">发表于 {{publicationDate}}</div>
+                {{/publicationDate}}
+
+                <div class="details_rating">{{rating}}</div>
+            </div>
+            <div id="details_button_row">
+                <a id="details_download" class="details_button" href="{{downloadUrl}}">下载</a>
+                {{#readerUrl}}
+                <a id="details_read" class="details_button" href="#" onclick="openBook('{{readerUrl}}');return false;">阅读</a>
+                <a id="details_mark_unread" class="details_button" href="#" onclick="markAsUnread('{{ItemId}}','{{rootPath}}');return false;">标记未读</a>
+                <a id="details_mark_finished" class="details_button" href="#" onclick="markAsFinished('{{ItemId}}','{{rootPath}}');return false;">标记已读</a>
+                {{/readerUrl}}
+            </div>
+        </div>
+    </div>
+</div>
+<div id="details_description">{{description}}</div>
+</div>

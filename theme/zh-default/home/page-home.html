@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+
+<head>
+    {{>common/inc-header.html}}
+    <link rel="stylesheet" type="text/css" href="{{rootPath}}/theme/home/homepage.css"/>
+</head>
+
+<body>
+<div id="banner"></div>
+
+{{#userName}}
+<div id="userinfo">
+    已连接为 {{userName}} - <a href="{{rootPath}}/?logout=true" id="logoutlink">退出登录</a>
+</div>
+{{/userName}}
+
+<div id="group">
+
+    {{#categories}}
+    <div class="cell">
+        <div class="category-title">
+            {{categoryName}}
+            <div class="tooltip">
+                {{categoryItemCount}} 项
+            </div>
+            <i></i>
+        </div>
+        <a href="{{categoryUrl}}" id="{{categoryId}}" class="category"></a>
+        <div class="category-latest-gap">
+            <a href="{{categoryLatestUrl}}" id="{{categoryLatestId}}" class="category-latest"></a>
+        </div>
+    </div>
+    {{/categories}}
+
+    {{#displayRawFiles}}
+    <div class="cell">
+        <div class="category-title">
+            原始文件
+        </div>
+        <a href="{{rawFilesUrl}}" id="files" class="category"></a>
+    </div>
+    {{/displayRawFiles}}
+
+    {{#displayNoFileMessage}}
+    <div id="message">
+        没有可显示的文件。
+        <br><br>
+        如果你刚安装 Ubooquity，需要先选择想加入书库的文件夹进行配置。
+        <br>
+        如果启用了用户访问管理，请确认已为书库中的每个文件夹配置访问权限。
+    </div>
+    {{/displayNoFileMessage}}
+
+</div>
+<br/>
+<br/>
+<a href="http://vaemendis.net/ubooquity" id="poweredby">由 Ubooquity 驱动</a>
+</body>
+
+</html>

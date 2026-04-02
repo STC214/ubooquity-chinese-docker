@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+
+<head>
+    {{>common/inc-header.html}}
+    <link rel="stylesheet" type="text/css" href="{{rootPath}}/theme/library/library.css"/>
+</head>
+
+<body>
+    <div id="toppagebar">
+        {{>library/inc-library-topbar.html}}
+    </div>
+    <div id="group">
+        <br/><br/><br/>
+        {{#rootFolders}}
+            <a href="{{folderUrl}}" class="rootlink">{{folderName}}</a>
+            <br/><br/>
+        {{/rootFolders}}
+    </div>
+    {{>library/inc-library-popups.html}}
+</body>
+
+</html>
