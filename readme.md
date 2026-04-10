@@ -1,26 +1,25 @@
 # Ubooquity Chinese Docker Kit
 
-这个仓库记录了一套 Ubooquity 的中文增强方案，主要包括：
-
-- 从 `docker run` 迁移到 `docker compose` 的部署整理
+这个仓库记录了我自己整理的 Ubooquity 中文增强方案，主要包括：
+- 从 `docker run` 迁移到 `docker compose` 的部署配置
 - 中文主题 `theme/zh-modern` 和 `theme/zh-default`
-- 浏览器侧后台汉化脚本 `admin-i18n`
+- 后台汉化脚本 `admin-i18n`
 - 原始文件与修改后文件的对照文档 `code_reference.md`
+- 已按原版资源做简体中文翻译的后台登录页
 
-如果你也在折腾 Ubooquity 的中文界面、主题和容器部署，这个仓库可以直接作为参考。
+如果你也在折腾 Ubooquity 的中文界面、主题和容器部署，这个仓库可以直接拿来参考。
 
 ## 合规说明
 
 这个仓库只提供我自己制作的中文主题、后台汉化脚本、部署说明和对照文档，不包含也不分发 Ubooquity 的官方安装包、源代码或其他受原作者协议限制的内容。
 
-如果你要使用 Ubooquity，本仓库建议你仍然按原作者的许可方式单独获取程序本体，并遵守其对应协议。
+如果你要使用 Ubooquity，建议仍然按照原作者的许可方式单独获取程序本体，并遵守对应协议。
 
 换句话说：
-
 - 仓库内容只覆盖我新增或修改的部分
-- Ubooquity 本体请由用户自行获取
+- Ubooquity 程序本体请由用户自行获取
 - 不要把这里的文件描述成 Ubooquity 官方发布内容
-- 如果后续加入了第三方资源，也要分别保留各自的授权信息
+- 如果后续加入第三方资源，也要分别保留各自的授权信息
 
 ## 仓库内容
 
@@ -29,19 +28,18 @@
 - `theme/zh-default`：尽量保持官方布局的中文主题
 - `admin-i18n/ubooquity-admin-i18n.user.js`：后台管理页汉化脚本
 - `code_reference.md`：完整的原始代码 / 修改后代码对照文档
+- `Ubooquity.jar`：我本地合并过主题和后台登录页中文文案后的测试包
 
 ## 当前镜像
 
 当前推荐使用的镜像是：
-
 - `lscr.io/linuxserver/ubooquity:latest`
 
 如果你之前还在用旧的 `linuxserver/ubooquity`，建议切换到上面这个地址。
 
 ## 迁移前说明
 
-你如果是从 `docker run` 切到 `docker compose`，通常需要先停掉旧容器，再用 compose 重新创建。
-
+如果你是从 `docker run` 切到 `docker compose`，通常需要先停掉旧容器，再用 compose 重新创建。
 只要不要删除宿主机上的配置目录，书库、数据库和设置都会保留。
 
 ## 现有挂载
@@ -80,7 +78,7 @@ docker compose pull
 docker compose up -d
 ```
 
-## 常用检查命令
+## 常用命令
 
 迁移完成后，可以检查容器状态和日志：
 
@@ -95,21 +93,20 @@ docker logs -f ubooquity
 id
 ```
 
-仓库里的 `compose.yml` 目前把 `PUID` 和 `PGID` 都设成了 `0`，这是因为我当前宿主机目录就是以 root 权限在管理。
-
+仓库里的 `compose.yml` 目前把 `PUID` 和 `PGID` 都设成了 `0`，这是因为我当前宿主机目录就是用 root 权限在管理。
 如果你的目录不是这种情况，就把它们改成你自己的 UID / GID。
 
 ## 中文主题
 
 ### `theme/zh-modern`
 
-这是基于 Ubooquity 官方主题机制做的中文美化主题，覆盖范围包括：
+这是基于 Ubooquity 官方主题机制制作的中文美化主题，覆盖范围包括：
 
 - 首页
 - 登录页
 - 书库列表页
-- 分类根目录页
-- 详情页
+- 书库根目录页
+- 书籍详情页
 - 顶栏、搜索和分页状态
 - 通用样式和少量交互增强
 
@@ -126,7 +123,6 @@ id
 ### `theme/zh-default`
 
 这是一个尽量贴近官方默认布局的中文主题。
-
 如果你想保留更多原始结构，只是把英文界面换成中文，可以选它。
 
 安装位置同样是 Ubooquity 工作目录下的 `themes` 目录。
@@ -140,8 +136,9 @@ admin-i18n/ubooquity-admin-i18n.user.js
 ```
 
 它适合装在 Tampermonkey、Violentmonkey 或其他支持用户脚本的浏览器扩展里。
-
 访问 `http://你的地址:2203/admin` 时，它会自动把常见的后台文案替换成中文，并做一些简单的界面优化。
+
+另外，仓库里的 `Ubooquity.jar` 也已经合入了我对后台登录页做的简体中文文案翻译。
 
 ## 代码对照文档
 
