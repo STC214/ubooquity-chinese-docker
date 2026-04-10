@@ -1,4 +1,10 @@
-﻿<body>
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <title>Ubooquity · 登录</title>
+  {{>common/inc-header.html}}
+</head>
+<body>
   <div class="auth-wrap">
     <section class="auth-panel">
       <div class="auth-head">
@@ -9,11 +15,12 @@
         </div>
       </div>
 
-      <form id="{{formId}}" class="auth-form" method="post">
+      <form id="{{formId}}" class="auth-form" method="POST" action="{{rootPath}}/">
         {{{hiddenInputs}}}
         <label>
           <span class="page-note">用户名</span>
           <input
+            id="loginfield"
             type="text"
             name="{{loginFieldName}}"
             autocomplete="username"
@@ -33,7 +40,7 @@
         </label>
 
         <div class="auth-actions">
-          <button type="button" onclick="{{onLoginClick}}">进入书库</button>
+          <button type="submit" onclick="{{onLoginClick}}">进入书库</button>
         </div>
       </form>
 
@@ -45,3 +52,4 @@
     </section>
   </div>
 </body>
+</html>
