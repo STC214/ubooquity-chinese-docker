@@ -1,46 +1,95 @@
 # Ubooquity Chinese Docker Kit
 
-这个仓库记录了我自己整理的 Ubooquity 中文增强方案，主要包括：
-- 从 `docker run` 迁移到 `docker compose` 的部署配置
-- 中文主题 `theme/zh-modern` 和 `theme/zh-default`
-- 后台汉化脚本 `admin-i18n`
-- 原始文件与修改后文件的对照文档 `code_reference.md`
-- 已按原版资源做简体中文翻译的后台登录页
+这个仓库记录了我整理的 Ubooquity 中文增强与移动端适配方案。当前重点已经从单独的自定义主题，扩展到直接修改 Ubooquity Jar 内置默认主题，让正在运行的默认界面也能在 PC 和手机浏览器上获得更舒服的排版。
 
-如果你也在折腾 Ubooquity 的中文界面、主题和容器部署，这个仓库可以直接拿来参考。
+当前本地 `Ubooquity.jar` 已合入默认主题、阅读页和部分中文化修改，可作为测试包替换到 Docker 容器中验证。
+
+## 当前状态
+
+- 默认主题 `themes/default` 已加入 PC / 移动端自适应布局。
+- 首页 `Comics`、最近漫画、原始文件入口已重新排版，PC 保持舒适比例，移动端放大图标与文字。
+- 漫画列表页移动端最多 3 列，窄屏自动降为 2 列，避免封面和文字过小。
+- 漫画详情弹窗已改为页面居中，封面、按钮和移动端点击区域已放大。
+- 阅读页移动端菜单已贴顶显示，按钮放大但限制宽度，避免遮挡关闭区域和左右翻页区域。
+- 详情弹窗的下载、阅读、标记未读、标记已读按钮已加粗并改为纯白文字。
+- `theme/zh-modern` 仍保留为可选中文美化主题，但当前正在使用和验证的主要目标是 Jar 内置默认主题。
+
+详细修改清单见：
+
+```text
+docs/modification-summary.md
+```
+
+Docker 容器替换 Jar 的完整流程见：
+
+```text
+docs/replace-ubooquity-jar.md
+```
 
 ## 合规说明
 
-这个仓库只提供我自己制作的中文主题、后台汉化脚本、部署说明和对照文档，不包含也不分发 Ubooquity 的官方安装包、源代码或其他受原作者协议限制的内容。
+这个仓库主要用于记录我自己制作和整理的主题样式、中文化脚本、部署说明和修改文档。
 
-如果你要使用 Ubooquity，建议仍然按照原作者的许可方式单独获取程序本体，并遵守对应协议。
-
-换句话说：
-- 仓库内容只覆盖我新增或修改的部分
-- Ubooquity 程序本体请由用户自行获取
-- 不要把这里的文件描述成 Ubooquity 官方发布内容
-- 如果后续加入第三方资源，也要分别保留各自的授权信息
+如果你要使用 Ubooquity，建议仍然按照原作者的许可方式单独获取程序本体，并遵守对应协议。不要把这里的文件描述成 Ubooquity 官方发布内容。
 
 ## 仓库内容
 
-- `compose.yml`：可直接使用的容器编排配置
-- `theme/zh-modern`：更现代的中文美化主题
-- `theme/zh-default`：尽量保持官方布局的中文主题
-- `admin-i18n/ubooquity-admin-i18n.user.js`：后台管理页汉化脚本
-- `code_reference.md`：完整的原始代码 / 修改后代码对照文档
-- `Ubooquity.jar`：我本地合并过主题和后台登录页中文文案后的测试包
+- `compose.yml`：LinuxServer Ubooquity Docker Compose 示例。
+- `Ubooquity.jar`：本地合并过默认主题移动端适配、阅读页调整和中文化资源后的测试 Jar。
+- `theme/default`：从 Jar 内置 `themes/default` 抽出的当前维护样式副本。
+- `reader/pagereader`：从 Jar 内置 `pagereader` 抽出的当前维护阅读页资源副本。
+- `theme/zh-modern`：可选中文美化主题，带移动端覆盖样式。
+- `theme/zh-default`：尽量贴近官方布局的中文主题。
+- `admin-i18n/ubooquity-admin-i18n.user.js`：后台管理页浏览器侧汉化脚本。
+- `code_reference.md`：原始代码与修改后代码的对照文档。
+- `docs/replace-ubooquity-jar.md`：在 Docker 容器中替换 Jar 的操作记录。
+- `docs/modification-summary.md`：本项目整体修改内容和文件映射。
 
-## 当前镜像
+## 默认主题维护
 
-当前推荐使用的镜像是：
-- `lscr.io/linuxserver/ubooquity:latest`
+当前实际生效的首页、漫画列表、详情弹窗和阅读页主要来自 Jar 内置资源。继续修改时优先改这些源码副本：
 
-如果你之前还在用旧的 `linuxserver/ubooquity`，建议切换到上面这个地址。
+```text
+theme/default/home/homepage.css
+theme/default/library/library.css
+reader/pagereader/reader.html
+reader/pagereader/pagereader.css
+reader/pagereader/pagereader.js
+```
 
-## 迁移前说明
+打包进 Jar 时，对应路径是：
 
-如果你是从 `docker run` 切到 `docker compose`，通常需要先停掉旧容器，再用 compose 重新创建。
-只要不要删除宿主机上的配置目录，书库、数据库和设置都会保留。
+```text
+themes/default/home/homepage.css
+themes/default/library/library.css
+pagereader/reader.html
+pagereader/pagereader.css
+pagereader/pagereader.js
+```
+
+如果修改后页面没有变化，优先确认是否改到了默认主题，而不是只改了 `theme/zh-modern`。
+
+## Docker 环境
+
+当前推荐镜像：
+
+```text
+lscr.io/linuxserver/ubooquity:latest
+```
+
+当前示例 Docker 主机：
+
+```text
+192.168.13.1
+```
+
+已确认容器内 Jar 路径：
+
+```text
+/app/ubooquity/Ubooquity.jar
+```
+
+替换 Jar 前建议始终重新搜索容器内路径并备份原 Jar，避免镜像版本或容器结构变化造成误覆盖。
 
 ## 现有挂载
 
@@ -53,106 +102,60 @@
 
 如果你的实际路径不同，记得同步修改 `compose.yml`。
 
-## 第一次迁移
+## 常用命令
 
-如果你要从旧容器迁移到 compose，可以按这个顺序来：
-
-```bash
-docker pull lscr.io/linuxserver/ubooquity:latest
-docker stop ubooquity
-docker rm ubooquity
-```
-
-然后检查仓库根目录的 `compose.yml`，把里面的卷路径改成你自己的实际路径，再启动：
+启动或更新 compose：
 
 ```bash
 docker compose up -d
-```
-
-## 日常更新
-
-以后更新通常只需要这两步：
-
-```bash
 docker compose pull
 docker compose up -d
 ```
 
-## 常用命令
-
-迁移完成后，可以检查容器状态和日志：
+检查容器状态和日志：
 
 ```bash
 docker compose ps
 docker logs -f ubooquity
 ```
 
-如果权限有问题，可以先查看当前用户的 UID 和 GID：
+查看本地 Jar 哈希：
 
-```bash
-id
+```powershell
+Get-FileHash -Algorithm SHA256 .\Ubooquity.jar
 ```
-
-仓库里的 `compose.yml` 目前把 `PUID` 和 `PGID` 都设成了 `0`，这是因为我当前宿主机目录就是用 root 权限在管理。
-如果你的目录不是这种情况，就把它们改成你自己的 UID / GID。
 
 ## 中文主题
 
 ### `theme/zh-modern`
 
-这是基于 Ubooquity 官方主题机制制作的中文美化主题，覆盖范围包括：
+这是一个基于 Ubooquity 官方主题机制制作的中文美化主题，覆盖范围包括首页、登录页、书库列表页、详情页、顶栏、搜索和分页状态。
 
-- 首页
-- 登录页
-- 书库列表页
-- 书库根目录页
-- 书籍详情页
-- 顶栏、搜索和分页状态
-- 通用样式和少量交互增强
-
-安装方式是把整个 `zh-modern` 目录放到 Ubooquity 工作目录下的 `themes` 里。
-
-如果你是 LinuxServer Docker，一般可以放到：
+安装方式是把整个 `zh-modern` 目录放到 Ubooquity 工作目录下的 `themes` 里，例如：
 
 ```text
 /mnt/sda4/Comics_L/config/themes/zh-modern
 ```
 
-它是一个前台主题，不会修改 Ubooquity 的后台管理页。
-
 ### `theme/zh-default`
 
-这是一个尽量贴近官方默认布局的中文主题。
-如果你想保留更多原始结构，只是把英文界面换成中文，可以选它。
-
-安装位置同样是 Ubooquity 工作目录下的 `themes` 目录。
+这是一个尽量贴近官方默认布局的中文主题。如果你想保留更多原始结构，只替换前台中文文案，可以选它。
 
 ## 后台汉化
 
-仓库里还提供了一个浏览器侧的后台汉化脚本：
+浏览器侧后台汉化脚本在：
 
 ```text
 admin-i18n/ubooquity-admin-i18n.user.js
 ```
 
-它适合装在 Tampermonkey、Violentmonkey 或其他支持用户脚本的浏览器扩展里。
-访问 `http://你的地址:2203/admin` 时，它会自动把常见的后台文案替换成中文，并做一些简单的界面优化。
+它适合装在 Tampermonkey、Violentmonkey 或其他支持用户脚本的浏览器扩展里。访问后台时，它会把常见后台文案替换成中文，并做一些简单界面优化。
 
-另外，仓库里的 `Ubooquity.jar` 也已经合入了我对后台登录页做的简体中文文案翻译。
+## 后续维护建议
 
-## 代码对照文档
-
-完整的“原代码 / 修改后代码”对照文档在：
-
-```text
-code_reference.md
-```
-
-如果你后面继续改主题、后台脚本或文案，建议先看这份文档，再按对应文件替换修改。
-
-## 建议的后续维护流程
-
-1. 先改 `compose.yml`，确认挂载路径和环境变量。
-2. 再确认主题目录是否放进了正确的 `themes` 目录。
-3. 如果要汉化后台，再装 `admin-i18n` 脚本。
-4. 最后用 `docker compose up -d` 和 `docker logs -f ubooquity` 验证效果。
+1. 修改默认主题或阅读页源码副本。
+2. 重新打包 `Ubooquity.jar`。
+3. 检查 Jar 内文件是否和源码副本一致。
+4. 按 `docs/replace-ubooquity-jar.md` 替换 Docker 容器内 Jar。
+5. 用 PC 浏览器、手机浏览器分别验证首页、列表页、详情弹窗和阅读页。
+6. 如果页面仍是旧样式，清理浏览器缓存或用无痕窗口重新访问。

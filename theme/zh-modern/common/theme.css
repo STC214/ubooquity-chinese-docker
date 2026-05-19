@@ -14,9 +14,29 @@
   --radius: 22px;
   --radius-sm: 14px;
   --content-width: 1280px;
+  --card-min: 220px;
+  --shell-gutter: 2rem;
+  --panel-pad: 1.25rem;
+  --topbar-grid: minmax(140px, 1fr) auto auto minmax(260px, 420px) auto;
   --cover-w: {{coverWidth}}px;
   --cover-h: {{coverHeight}}px;
   color-scheme: dark;
+}
+
+html[data-device="tablet"] {
+  --content-width: 980px;
+  --card-min: 180px;
+  --shell-gutter: 1.25rem;
+  --panel-pad: 1rem;
+  --topbar-grid: 1fr auto auto;
+}
+
+html[data-device="phone"] {
+  --content-width: 100%;
+  --card-min: 100%;
+  --shell-gutter: 0.75rem;
+  --panel-pad: 0.85rem;
+  --topbar-grid: 1fr;
 }
 
 * {
@@ -38,6 +58,10 @@ body {
     linear-gradient(160deg, #050b14 0%, var(--bg) 45%, #0b1320 100%);
 }
 
+body.has-device-switcher {
+  padding-bottom: 4.5rem;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -53,7 +77,7 @@ img {
 }
 
 .page-shell {
-  width: min(100% - 2rem, var(--content-width));
+  width: min(100% - var(--shell-gutter), var(--content-width));
   margin: 0 auto;
   padding: 1.25rem 0 2.5rem;
 }
@@ -72,7 +96,7 @@ img {
 
 .hero {
   border-radius: calc(var(--radius) + 8px);
-  padding: 1.5rem;
+  padding: calc(var(--panel-pad) + 0.25rem);
   display: grid;
   gap: 1rem;
   grid-template-columns: 1.6fr 0.9fr;
@@ -104,7 +128,10 @@ img {
 }
 
 .topbar-tools {
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: var(--topbar-grid);
+  justify-content: stretch;
+  align-items: center;
 }
 
 .brand-line {
@@ -205,7 +232,7 @@ img {
 .detail-card,
 .auth-panel {
   border-radius: var(--radius);
-  padding: 1.25rem;
+  padding: var(--panel-pad);
 }
 
 .panel + .panel {
@@ -236,7 +263,7 @@ img {
 .grid-categories,
 .grid-items,
 .grid-folders {
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-min)), 1fr));
   margin-top: 1rem;
 }
 
@@ -261,6 +288,31 @@ img {
 .folder-body h3 {
   margin: 0.8rem 0 0;
   font-size: 1.08rem;
+}
+
+.category-card .card-body,
+.folder-card .folder-body {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.category-card .card-body {
+  min-height: 100%;
+  align-content: center;
+}
+
+.category-card .card-top,
+.category-card .card-actions,
+.folder-card .folder-meta,
+.folder-card .card-actions {
+  justify-content: center;
+  width: 100%;
+}
+
+.folder-cover {
+  display: grid;
+  place-items: center;
 }
 
 .card-top {
@@ -505,7 +557,14 @@ img {
 
 @media (max-width: 900px) {
   .hero,
+  html[data-device="desktop"] .hero,
+  html[data-device="tablet"] .hero,
   .detail-layout {
+    grid-template-columns: 1fr;
+  }
+
+  html[data-device="desktop"] .detail-layout,
+  html[data-device="tablet"] .detail-layout {
     grid-template-columns: 1fr;
   }
 
@@ -592,4 +651,387 @@ img {
   display: flex;
   flex-wrap: wrap;
   gap: 0.65rem;
+}
+
+.device-switcher {
+  position: fixed;
+  left: 50%;
+  bottom: max(0.8rem, env(safe-area-inset-bottom));
+  z-index: 20;
+  display: inline-grid;
+  grid-template-columns: repeat(4, minmax(0, auto));
+  gap: 0.25rem;
+  max-width: calc(100% - 1rem);
+  padding: 0.3rem;
+  border: 1px solid rgba(154, 176, 201, 0.18);
+  border-radius: 999px;
+  background: rgba(7, 17, 29, 0.88);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(18px);
+  transform: translateX(-50%);
+}
+
+.device-switcher button {
+  min-width: 3.1rem;
+  min-height: 2.1rem;
+  padding: 0 0.72rem;
+  border: 0;
+  border-radius: 999px;
+  color: var(--muted);
+  background: transparent;
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.device-switcher button[aria-pressed="true"] {
+  color: #06111c;
+  background: linear-gradient(135deg, #82d4ff, #62f2c2);
+}
+
+html[data-device="desktop"] .grid-items .book-card {
+  min-height: 100%;
+}
+
+html[data-device="desktop"] .hero {
+  grid-template-columns: 1.6fr 0.9fr;
+}
+
+html[data-device="desktop"] .detail-layout {
+  grid-template-columns: minmax(240px, 320px) 1fr;
+}
+
+html[data-device="desktop"] .grid-categories,
+html[data-device="desktop"] .grid-items,
+html[data-device="desktop"] .grid-folders,
+html[data-device="tablet"] .grid-categories,
+html[data-device="tablet"] .grid-items,
+html[data-device="tablet"] .grid-folders {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-min)), 1fr));
+}
+
+html[data-device="desktop"] .topbar {
+  position: sticky;
+  top: 0.75rem;
+}
+
+html[data-device="tablet"] .topbar-tools .brand-line,
+html[data-device="tablet"] .topbar-tools .search-form,
+html[data-device="tablet"] .topbar-tools .page-selector,
+html[data-device="phone"] .topbar-tools .brand-line,
+html[data-device="phone"] .topbar-tools .search-form,
+html[data-device="phone"] .topbar-tools .page-selector {
+  grid-column: 1 / -1;
+}
+
+html[data-device="tablet"] .search-form,
+html[data-device="phone"] .search-form {
+  max-width: none;
+}
+
+html[data-device="tablet"] .hero,
+html[data-device="tablet"] .detail-layout,
+html[data-device="phone"] .hero,
+html[data-device="phone"] .detail-layout {
+  grid-template-columns: 1fr;
+}
+
+html[data-device="phone"] .page-shell {
+  padding-top: 0.5rem;
+}
+
+html[data-device="phone"] .hero h1 {
+  font-size: clamp(1.85rem, 12vw, 2.6rem);
+}
+
+html[data-device="phone"] .hero-card .stat,
+html[data-device="phone"] .section-head,
+html[data-device="phone"] .toolbar-head,
+html[data-device="phone"] .detail-head,
+html[data-device="phone"] .auth-head,
+html[data-device="phone"] .topbar-tools,
+html[data-device="phone"] .search-form,
+html[data-device="phone"] .card-actions {
+  align-items: stretch;
+}
+
+html[data-device="phone"] .search-form,
+html[data-device="phone"] .card-actions,
+html[data-device="phone"] .quick-links {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+html[data-device="phone"] .action,
+html[data-device="phone"] .search-form button,
+html[data-device="phone"] .auth-form button {
+  width: 100%;
+}
+
+html[data-device="phone"] .section-head,
+html[data-device="phone"] .toolbar-head,
+html[data-device="phone"] .detail-head,
+html[data-device="phone"] .auth-head,
+html[data-device="phone"] .hero-card .stat {
+  flex-direction: column;
+}
+
+html[data-device="phone"] .topbar {
+  position: static;
+  top: auto;
+}
+
+html[data-device="phone"] .detail-cover {
+  width: min(100%, 320px);
+  margin: 0 auto;
+}
+
+html[data-device="phone"] .book-card,
+html[data-device="phone"] .folder-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  min-height: 0;
+}
+
+html[data-device="phone"] .book-cover,
+html[data-device="phone"] .folder-cover {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+}
+
+html[data-device="phone"] .book-body,
+html[data-device="phone"] .folder-body {
+  min-width: 0;
+  padding: 1rem;
+}
+
+html[data-device="phone"] .category-card h3,
+html[data-device="phone"] .book-body h3,
+html[data-device="phone"] .folder-body h3 {
+  margin-top: 0.6rem;
+  font-size: 1.16rem;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+html[data-device="phone"] .meta,
+html[data-device="phone"] .folder-meta,
+html[data-device="phone"] .detail-meta,
+html[data-device="phone"] .popup-chips {
+  gap: 0.35rem;
+}
+
+html[data-device="phone"] .meta span,
+html[data-device="phone"] .folder-meta span,
+html[data-device="phone"] .detail-meta span,
+html[data-device="phone"] .chip {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+html[data-device="phone"] .cover-chip,
+html[data-device="phone"] .progress-pill {
+  left: 0.45rem;
+  top: 0.45rem;
+  font-size: 0.68rem;
+}
+
+html[data-device="phone"] .progress-pill {
+  left: auto;
+  right: 0.45rem;
+}
+
+html[data-device="phone"] .library-popups {
+  display: none;
+}
+
+@media (max-width: 820px), (hover: none) and (pointer: coarse) {
+  :root {
+    --content-width: 100%;
+    --card-min: 100%;
+    --shell-gutter: 0.75rem;
+    --panel-pad: 0.85rem;
+    --topbar-grid: 1fr;
+  }
+
+  .page-shell {
+    width: min(100% - var(--shell-gutter), var(--content-width));
+    padding-top: 0.5rem;
+  }
+
+  body.has-device-switcher {
+    padding-bottom: 4.85rem;
+  }
+
+  .hero,
+  .detail-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.85rem, 12vw, 2.6rem);
+  }
+
+  .hero,
+  .panel,
+  .detail-card,
+  .auth-panel,
+  .topbar {
+    border-radius: 18px;
+  }
+
+  .topbar {
+    position: static;
+    top: auto;
+    padding: 0.85rem;
+  }
+
+  .topbar-tools {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .topbar-tools .brand-line,
+  .topbar-tools .search-form,
+  .topbar-tools .page-selector {
+    grid-column: 1 / -1;
+  }
+
+  .topbar-crumbs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 0.15rem;
+  }
+
+  .section-head,
+  .toolbar-head,
+  .detail-head,
+  .auth-head,
+  .hero-card .stat {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .grid-categories,
+  .grid-items,
+  .grid-folders,
+  html[data-device="desktop"] .grid-categories,
+  html[data-device="desktop"] .grid-items,
+  html[data-device="desktop"] .grid-folders,
+  html[data-device="tablet"] .grid-categories,
+  html[data-device="tablet"] .grid-items,
+  html[data-device="tablet"] .grid-folders {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+
+  .book-card,
+  .folder-card,
+  html[data-device="desktop"] .book-card,
+  html[data-device="desktop"] .folder-card,
+  html[data-device="tablet"] .book-card,
+  html[data-device="tablet"] .folder-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    min-height: 0;
+  }
+
+  .book-cover,
+  .folder-cover {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+  }
+
+  .book-body,
+  .folder-body {
+    min-width: 0;
+    padding: 1rem;
+  }
+
+  .category-card h3,
+  .book-body h3,
+  .folder-body h3 {
+    margin-top: 0.6rem;
+    font-size: 1.16rem;
+    line-height: 1.42;
+    overflow-wrap: anywhere;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+
+  .card-body p,
+  .book-body,
+  .folder-body,
+  .description {
+    font-size: 1rem;
+  }
+
+  .meta,
+  .folder-meta,
+  .detail-meta,
+  .popup-chips {
+    gap: 0.35rem;
+  }
+
+  .meta span,
+  .folder-meta span,
+  .detail-meta span,
+  .chip {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .search-form,
+  .card-actions,
+  .quick-links {
+    display: grid;
+    grid-template-columns: 1fr;
+    max-width: none;
+  }
+
+  .action,
+  .search-form button,
+  .auth-form button {
+    width: 100%;
+    min-height: 2.75rem;
+    font-size: 1rem;
+  }
+
+  .detail-cover {
+    width: min(100%, 320px);
+    margin: 0 auto;
+  }
+
+  .library-popups {
+    display: none;
+  }
+
+  .cover-chip,
+  .progress-pill {
+    left: 0.45rem;
+    top: 0.45rem;
+    font-size: 0.68rem;
+  }
+
+  .progress-pill {
+    left: auto;
+    right: 0.45rem;
+  }
+
+  .device-switcher {
+    width: calc(100% - 1rem);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-radius: 18px;
+  }
+
+  .device-switcher button {
+    min-width: 0;
+    padding: 0 0.35rem;
+  }
 }
