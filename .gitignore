@@ -1,0 +1,34 @@
+# Keep the patched runtime jar tracked, but do not commit local backups.
+*.bak
+*.jar.bak
+Ubooquity.jar.pre-*.bak
+Ubooquity.jar.*.bak
+!Ubooquity.jar
+
+# Local build and decompile outputs.
+build/
+out/
+target/
+classes/
+decompiled/
+tmp/
+temp/
+tmp-quality-check/
+
+# Local deployment or reorganization scratch files.
+*.container.bak
+*.smart-cover-*.jar
+*.tsv
+.reorg-staging-*/
+.reorg-manifests/
+
+# Editor and OS noise.
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+
+# Local agent/cache state.
+.agents/
+.codex/
