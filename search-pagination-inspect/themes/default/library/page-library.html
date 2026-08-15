@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {{>common/inc-header.html}}
+    <link rel="stylesheet" type="text/css" href="{{rootPath}}/theme/library/library.css"/>
+</head>
+
+<body>
+    <div id="toppagebar">
+        {{#isSearchResult}}
+            {{>library/inc-library-topbar-search.html}}
+        {{/isSearchResult}}
+        {{^isSearchResult}}
+            {{>library/inc-library-topbar.html}}
+        {{/isSearchResult}}
+    </div>
+    <div id="group">
+        {{folderMetadata}}
+        {{#items}}
+        <div class="cellcontainer">
+            {{#isFolder}}
+            <div class="cell">
+                <div class="thumb">
+                    <a href="{{itemFolderUrl}}">
+                        <img src="{{itemCoverUrl}}"/>
+                    </a>
+                </div>
+                <div class="label">{{itemTitle}}</div>
+                <div class="numberblock">
+                    <div class="number">
+                        <span>{{itemChildrenCount}}</span>
+                    </div>
+                </div>
+            </div>
+            {{/isFolder}}
+            {{^isFolder}}
+            <div class="cell">
+                <div class="thumb">
+                    <a href="#" onclick="togglePopup('bookdetails');loadBookDetails({{itemId}},'{{rootPath}}');return false;">
+                        <img src="{{itemCoverUrl}}"/>
+                        <div class="{{readingStatusClass}}">
+                            <div class="cover_progress_bar"><span class="cover_progress_bar_fill" style="--value: {{progress}}%;"></span></div>
+                        </div>
+                    </a>
+                </div>
+                <div class="label">
+                    <div class="title">{{itemTitle}}</div>
+                </div>
+            </div>
+            {{/isFolder}}
+        </div>
+        {{/items}}
+    </div>
+    {{>library/inc-library-popups.html}}
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<div id="topbarleft">
+    <a href="{{prev10pageUrl}}" id="arrowleft10" class="{{prev10pageClass}} topbutton"></a>
+    <a href="{{prevPageUrl}}" id="arrowleft" class="{{prevPageClass}} topbutton"></a>
+</div>
+<div id="topbarcenter">
+    <a href="#" id="settings" class="topbutton" onclick="togglePopup('settingsbox');return false;"></a>
+    <a href="{{parentUrl}}" id="arrowup" class="topbutton"></a>
+    <div id="pagelabel">
+        {{#displayPageSelector}}
+            <a href="#" onclick="togglePopup('pageselector');return false;">第 {{pageNumber}} 页</a><br/>
+            <a href="#" id="pagelabeltotal" onclick="togglePopup('pageselector');return false;">共 {{totalPages}} 页</a>
+        {{/displayPageSelector}}
+        {{^displayPageSelector}}
+            {{pageLabel}}
+        {{/displayPageSelector}}
+    </div>
+    <a href="#" id="search" class="topbutton" onclick="togglePopup('searchbox');document.forms.searchform.searchstring.focus();return false;"></a>
+    <a href="?random=true" id="random" class="topbutton"></a>
+</div>
+<div id="topbarright">
+    <a href="{{nextPageUrl}}" id="arrowright" class="{{nextPageClass}} topbutton"></a>
+    <a href="{{next10pageUrl}}" id="arrowright10" class="{{next10pageClass}} topbutton"></a>
+</div>

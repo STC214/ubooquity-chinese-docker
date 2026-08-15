@@ -6863,7 +6863,12 @@ a img {
 
 <body>
     <div id="toppagebar">
-        {{>library/inc-library-topbar.html}}
+        {{#isSearchResult}}
+            {{>library/inc-library-topbar-search.html}}
+        {{/isSearchResult}}
+        {{^isSearchResult}}
+            {{>library/inc-library-topbar.html}}
+        {{/isSearchResult}}
     </div>
     <div id="group">
         {{folderMetadata}}

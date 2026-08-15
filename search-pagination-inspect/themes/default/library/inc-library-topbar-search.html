@@ -1,0 +1,27 @@
+<div id="topbarleft">
+    <form class="{{prev10pageClass}} searcharrowform" method="POST" action="{{prev10pageUrl}}">
+        <input type="hidden" name="searchstring" value="{{searchString}}"/>
+        <button type="submit" id="searchleft10" class="topbutton"></button>
+    </form>
+    <form class="{{prevPageClass}} searcharrowform" method="POST" action="{{prevPageUrl}}">
+        <input type="hidden" name="searchstring" value="{{searchString}}"/>
+        <button type="submit" id="searchleft" class="topbutton"></button>
+    </form>
+</div>
+<div id="topbarcenter">
+    <a href="#" id="settings" class="topbutton" onclick="togglePopup('settingsbox');return false;"></a>
+    <a href="{{parentUrl}}" id="arrowup" class="topbutton"></a>
+    <div id="pagelabel">搜索结果</div>
+    <a href="#" id="search" class="topbutton" onclick="togglePopup('searchbox');document.forms.searchform.searchstring.focus();return false;"></a>
+    <a href="?random=true" id="random" class="topbutton"></a>
+</div>
+<div id="topbarright">
+    <form class="{{nextPageClass}} searcharrowform" method="POST" action="{{nextPageUrl}}">
+        <input type="hidden" name="searchstring" value="{{searchString}}"/>
+        <button type="submit" id="searchright" class="topbutton"></button>
+    </form>
+    <form class="{{next10pageClass}} searcharrowform" method="POST" action="{{next10pageUrl}}">
+        <input type="hidden" name="searchstring" value="{{searchString}}"/>
+        <button type="submit" id="searchright10" class="topbutton"></button>
+    </form>
+</div>

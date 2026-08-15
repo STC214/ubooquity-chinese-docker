@@ -1,0 +1,82 @@
+Search pagination verification record
+=====================================
+
+Input artifacts
+---------------
+baseline template: search-pagination-inspect\baseline\themes\default\library\page-library.html
+modified/delivered: Ubooquity.jar
+entry: themes/default/library/page-library.html
+dependent entry: themes/default/library/inc-library-topbar-search.html
+
+Baseline/modified semantic command
+----------------------------------
+Command:
+  powershell -NoProfile -ExecutionPolicy Bypass -File .\search-pagination-inspect\verify-search-pagination.ps1
+
+Literal output:
+  PASS baseline_has_no_search_result_branch
+  PASS baseline_uses_normal_topbar_unconditionally
+  PASS modified_selects_search_topbar
+  PASS modified_keeps_normal_topbar_for_browsing
+  PASS search_previous_10_pages_is_post
+  PASS search_previous_page_is_post
+  PASS search_next_page_is_post
+  PASS search_next_10_pages_is_post
+  PASS all_search_arrows_preserve_search_term count=4
+  RESULT baseline=search pagination loses POST state
+  RESULT modified=search pagination posts searchstring on next/previous page
+
+Exit status: 0
+
+Installed artifact integrity command
+------------------------------------
+Command:
+  jar tf .\Ubooquity.jar
+
+Input:
+  Ubooquity.jar SHA256 8D002E9E6648F00E4E5EA58A30B2C600F4D86800247B86EABA795942A40BC6C6
+
+Literal output (command output was redirected after successful enumeration):
+  reinstall_jar_tf_exit=0
+
+Exit status: 0
+
+Rollback command
+----------------
+Command:
+  powershell -NoProfile -ExecutionPolicy Bypass -File .\search-pagination-inspect\rollback.ps1
+
+Literal output:
+  ROLLBACK_OK sha256=8310A8DD0243C351C7039846F170EA3E61DEEC7672196D5AD267CA35F4A7318D target=F:\Project\04_Desktop_Dev_Utilities\uboo_trans\Ubooquity.jar
+  rollback_exit=0
+  restored_sha256=8310A8DD0243C351C7039846F170EA3E61DEEC7672196D5AD267CA35F4A7318D
+
+Exit status: 0
+
+The delivered JAR was rebuilt from the canonical source after the rollback test:
+  rebuild_exit=0
+  rebuilt_sha256=8D002E9E6648F00E4E5EA58A30B2C600F4D86800247B86EABA795942A40BC6C6
+  post_rebuild_verify_exit=0
+
+Remote deployment verification (2026-08-15)
+-------------------------------------------
+Host: 192.168.13.1
+Application container: L_ubooquity
+Proxy container: L_ubooquity_port_proxy
+Container JAR: /app/ubooquity/Ubooquity.jar
+Remote backup: /tmp/Ubooquity.container-before-search-pagination-20260815-222909.jar
+Remote rollback: /tmp/rollback-ubooquity-search-pagination-20260815-222909.sh
+
+Literal final verification output:
+  app_running=true app_restarts=0
+  proxy_running=true proxy_restarts=0
+  8d002e9e6648f00e4e5ea58a30b2c600f4d86800247b86eaba795942a40bc6c6  /tmp/Ubooquity.final-check.jar
+  app_http_status=200
+  proxy_https_status=200
+  rollback_syntax=ok
+  docker restart L_ubooquity_port_proxy >/dev/null
+  final_remote_verify_exit=0
+
+The rollback was executed once, restored SHA256
+8310A8DD0243C351C7039846F170EA3E61DEEC7672196D5AD267CA35F4A7318D,
+and the fixed JAR was then deployed again and verified.

@@ -1,0 +1,18 @@
+﻿diff --git "a/search-pagination-inspect\\baseline\\themes\\default\\library\\page-library.html" "b/theme\\default\\library\\page-library.html"
+index aa349b6..0d1326e 100644
+--- "a/search-pagination-inspect\\baseline\\themes\\default\\library\\page-library.html"
++++ "b/theme\\default\\library\\page-library.html"
+@@ -8,7 +8,12 @@
+ 
+ <body>
+     <div id="toppagebar">
+-        {{>library/inc-library-topbar.html}}
++        {{#isSearchResult}}
++            {{>library/inc-library-topbar-search.html}}
++        {{/isSearchResult}}
++        {{^isSearchResult}}
++            {{>library/inc-library-topbar.html}}
++        {{/isSearchResult}}
+     </div>
+     <div id="group">
+         {{folderMetadata}}
